@@ -51,3 +51,23 @@ CREATE TABLE reservas (
   , created_at timestamp  NOT NULL DEFAULT localtimestamp
   , UNIQUE (vuelo_id, asiento)
 );
+
+INSERT
+  INTO usuarios (nombre, password)
+VALUES ('pepe', crypt('pepe', gen_salt('bf', 11)))
+     , ('juan', crypt('juan', gen_salt('bf', 11)));
+
+INSERT
+INTO aeropuertos (codigo, denominacion)
+VALUES ('XRY', 'Jerez')
+  , ('SVQ', 'Sevilla')
+  , ('STD', 'Londres Stansted');
+
+INSERT
+INTO companias (denominacion)
+VALUES ('Iberia')
+, ('Ryanair');
+
+INSERT
+  INTO vuelos (codigo, origen_id, destino_id, compania_id, salida, llegada, plazas, precio)
+VALUES ('IB4341', 1, 2, 1, '2018-04-23 16:35:00', '2018-04-23 19:00:00', 300, 50);
