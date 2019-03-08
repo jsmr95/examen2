@@ -37,7 +37,8 @@ class Reservas extends \yii\db\ActiveRecord
             [['vuelo_id', 'asiento'], 'unique', 'targetAttribute' => ['vuelo_id', 'asiento']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
             [['vuelo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Vuelos::className(), 'targetAttribute' => ['vuelo_id' => 'id']],
-            [['asiento'], 'asientosDisponibles'],
+            [['asiento'], 'plazasDisponibles'],
+            [['asiento'], 'asientoVacio'],
         ];
     }
 
@@ -55,7 +56,7 @@ class Reservas extends \yii\db\ActiveRecord
         ];
     }
 
-    public function asientosDisponibles($attribute, $params)
+    public function plazasDisponibles($attribute, $params)
     {
         if (!$this->hasErrors()) {
             $reservas = static::findAll(['vuelo_id' => $this->vuelo_id]);
@@ -63,6 +64,18 @@ class Reservas extends \yii\db\ActiveRecord
             $vuelo = Vuelos::findOne($this->vuelo_id);
             if (($vuelo->plazas - $total) <= 0) {
                 $this->addError($attribute, 'Error: no hay plazas disponibles para ese vuelo.');
+            }
+        }
+    }
+
+    public function asientoVacio($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $reservas = static::findAll(['vuelo_id' => $this->vuelo_id]);
+            foreach ($reservas as $reserva) {
+                if ($this->asiento == $reserva->asiento) {
+                    $this->addError($attribute, 'Error: Ese asiento ya está cogido, pruebe con otro.');
+                }
             }
         }
     }
