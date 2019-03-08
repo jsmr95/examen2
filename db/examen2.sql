@@ -66,8 +66,8 @@ VALUES ('Iberia')
 , ('Ryanair');
 
 INSERT INTO vuelos (codigo, origen_id, destino_id, compania_id, salida, llegada, plazas, precio)
-VALUES ('IB4341', 1, 2, 1, '2018-04-23 16:35:00', '2018-04-23 19:00:00', 300, 50)
-('RY1234', 1, 3, 2, '2018-04-25 16:35:00', '2018-04-25 19:00:00', 200, 25)
+VALUES ('IB4341', 1, 2, 1, '2018-04-23 16:35:00', '2018-04-23 19:00:00', 300, 50),
+('RY1234', 1, 3, 2, '2018-04-25 16:35:00', '2018-04-25 19:00:00', 200, 25);
 
 INSERT INTO reservas (usuario_id, vuelo_id, asiento, created_at)
 VALUES (1, 1, 1, '2018-04-23 12:00:00'),
